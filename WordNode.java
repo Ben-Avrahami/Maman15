@@ -3,7 +3,7 @@ public class WordNode
     private String _word;
     private WordNode _next;
     private int _timesInText;    
-    
+
     /**
      * Construct a new WordNode with a given word
      * Sets the next word to null;
@@ -84,29 +84,34 @@ public class WordNode
         return _timesInText;    
     }
 
+    /**
+     * This method is part of the mergeSort method 
+     * which sorts the array in time complexity O(nlogn)
+     */
     private WordNode merge(WordNode list1, WordNode list2) {
-        if (list1 == null) return list2;
-        if (list2 == null) return list1;
-        if (list1.getWord().compareTo(list2.getWord()) == 0) {//sameWord
-            list1.addToTimesInText();
-            if (list1.getNext()!= null && list2.getNext()!= null){
-            list1.setNext(merge (list1.getNext(), list2.getNext()));
-        return list1;}
-            if (list2.getNext()== null)
-            return list1;
-            if (list1.getNext()== null)
+        if (list1 == null) 
             return list2;
+        if (list2 == null) 
+            return list1;
+        if (list1.getWord().compareTo(list2.getWord()) == 0) {//same word
+            list1._timesInText = list1._timesInText+list2._timesInText;//adds to the count of the word the count of the 2 words combined
+            list1.setNext(merge (list1.getNext(), list2.getNext()));//next recursive call
+            return list1;
         } // end if
         if (list1.getWord().compareTo(list2.getWord()) < 0) {//list 1 smaller
-            list1.setNext(merge (list1.getNext(), list2));
+            list1.setNext(merge (list1.getNext(), list2));//next recursive call
             return list1;
         } // end if
         else {
-            list2.setNext(merge (list1, list2.getNext()));
+            list2.setNext(merge (list1, list2.getNext()));//next recursive call
             return list2;
         } // end else
     }
 
+    /**
+     * This method is part of the mergeSort method 
+     * which sorts the array in time complexity O(nlogn)
+     */
     private WordNode split(WordNode node) 
     {
         if (node == null || node.getNext() == null) 
@@ -117,6 +122,10 @@ public class WordNode
         return list2;
     }
 
+    /**
+     * This method is part of the mergeSort method 
+     * which sorts the array in time complexity O(nlogn)
+     */
     protected WordNode mergeSort (WordNode node) 
     {
         if (node == null || node.getNext() == null)
